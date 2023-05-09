@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "944126629852",
+    "project_id": "menugo-9451c",
+    "storage_bucket": "menugo-9451c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944126629852:android:8c825d1da620145b3d6119",
+        "android_client_info": {
+          "package_name": "com.oriol.menugo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944126629852-rre7kchilu24q0f00ptl8rsvndlveafr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oriol.menugo",
+            "certificate_hash": "34500c9cfa53dd9db45304561c3aff121e4af536"
+          }
+        },
+        {
+          "client_id": "944126629852-i36gg5jpdo5c18dh89759ntvvkenk950.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClw65_dZCiYXmJiYCsM3iTfK1ik9Wi3Co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944126629852-i36gg5jpdo5c18dh89759ntvvkenk950.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
