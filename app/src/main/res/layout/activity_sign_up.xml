@@ -19,7 +19,7 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edtPhone"
-            android:hint="Numero Tel�fono"
+            android:hint="Numero Teléfono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/white"
