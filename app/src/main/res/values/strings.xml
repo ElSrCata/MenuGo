@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MenuGo</string>
+    <string name="slogan">La comida que te gusta, aquí la encontrarás, y en cada plato nuestra pasión culminará</string>
+    <string name="signUp">Registratse</string>
+    <string name="signIn">Login</string>
+    <string name="successSignIn">Logueado correctamente</string>
+    <string name="errorSignIn">Contraseña incorrecta</string>
+    <string name="usernoexist">El usuario no existe</string>
 </resources>
