@@ -3,7 +3,18 @@
     <string name="slogan">La comida que te gusta, aquí la encontrarás, y en cada plato nuestra pasión culminará</string>
     <string name="signUp">Registratse</string>
     <string name="signIn">Login</string>
-    <string name="successSignIn">Logueado correctamente</string>
-    <string name="errorSignIn">Contraseña incorrecta</string>
-    <string name="usernoexist">El usuario no existe</string>
+    <string name="carro">Carro</string>
+    <string name="pedido">Pedido</string>
+    <string name="salir">Salir</string>
+    <string name="title_activity_home">Home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 </resources>
