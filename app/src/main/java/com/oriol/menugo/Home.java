@@ -14,9 +14,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
 
 public class Home extends AppCompatActivity {
@@ -27,6 +29,8 @@ public class Home extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference category;
     TextView txtFullName;
+    RecyclerView recycler_menu;
+    RecyclerView.LayoutManager layoutManager;
 
 
     @Override
@@ -39,7 +43,7 @@ public class Home extends AppCompatActivity {
         setSupportActionBar(binding.appBarHome.toolbar);
 
         //Firebase
-        database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/");
         category = database.getReference("Category");
 
         binding.appBarHome.fab.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +65,14 @@ public class Home extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        //
+        //Nombre Usuario
         View headerView = navigationView.getHeaderView(0);
+        txtFullName = (TextView)findViewById(R.id.txtFullName);
+        txtFullName.setText(Common.current_User.getName());
+
+
+        //Load Menu
+
     }
 
     @Override
