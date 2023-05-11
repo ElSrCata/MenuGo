@@ -3,8 +3,11 @@ package com.oriol.menugo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -14,12 +17,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.oriol.menugo.Common.Common;
+import com.oriol.menugo.Model.Category;
+import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
+import com.squareup.picasso.Picasso;
 
 public class Home extends AppCompatActivity {
 
@@ -67,12 +74,36 @@ public class Home extends AppCompatActivity {
 
         //Nombre Usuario
         View headerView = navigationView.getHeaderView(0);
-        txtFullName = (TextView)findViewById(R.id.txtFullName);
+        txtFullName = (TextView)headerView.findViewById(R.id.txtFullName);
         txtFullName.setText(Common.current_User.getName());
 
 
         //Load Menu
+        recycler_menu = (RecyclerView)findViewById(R.id.recycler_menu);
+        recycler_menu.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recycler_menu.setLayoutManager(layoutManager);
 
+        loadMenu();
+    }
+
+    public void loadMenu() {
+        FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
+            @Override
+            protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
+                viewHolder.txtMenuName.setText(model.getName());
+                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView);
+                final Category clickItem = model;
+                viewHolder.setItemClickListener(new MenuViewHolder.ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Toast.makeText(Home.this, "" + clickItem.getName(), Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+            }
+        };
+        recycler_menu.setAdapter(adapter);
     }
 
     @Override
