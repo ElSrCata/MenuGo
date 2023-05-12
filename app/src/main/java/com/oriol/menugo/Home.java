@@ -1,5 +1,6 @@
 package com.oriol.menugo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -38,6 +39,7 @@ public class Home extends AppCompatActivity {
     TextView txtFullName;
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
+    FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
 
 
     @Override
@@ -88,7 +90,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void loadMenu() {
-        FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
+        adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
@@ -97,7 +99,11 @@ public class Home extends AppCompatActivity {
                 viewHolder.setItemClickListener(new MenuViewHolder.ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(Home.this, "" + clickItem.getName(), Toast.LENGTH_SHORT).show();
+                        //Consigue el ID de cada categoria y va a cada actividad
+                        Intent foodlist = new Intent(Home.this, FootList.class);
+
+                        foodlist.putExtra("CategoryId", adapter.getRef(position).getKey());
+                        startActivity(foodlist);
                     }
 
                 });
