@@ -100,10 +100,10 @@ public class Home extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         //Consigue el ID de cada categoria y va a cada actividad
-                        Intent foodlist = new Intent(Home.this, FootList.class);
+                        Intent foodList = new Intent(Home.this, FootList.class);
 
-                        foodlist.putExtra("CategoryId", adapter.getRef(position).getKey());
-                        startActivity(foodlist);
+                        foodList.putExtra("CategoryId", adapter.getRef(position).getKey());
+                        startActivity(foodList);
                     }
 
                 });
