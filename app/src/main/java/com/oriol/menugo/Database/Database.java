@@ -30,6 +30,7 @@ public class Database extends SQLiteAssetHelper {
         qb.setTables(sqlTable);
         Cursor c = qb.query(db, sqlSelect, null, null, null, null, null);
 
+        //Creation of orders list
         final List<Order> result = new ArrayList<>();
 
         if(c.moveToFirst())
