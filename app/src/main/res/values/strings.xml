@@ -7,6 +7,7 @@
     <string name="pedido">Pedido</string>
     <string name="salir">Salir</string>
     <string name="description">Descripción</string>
+    <string name="placeorder">Realizar pedido</string>
     <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
