@@ -49,7 +49,7 @@ public class FootList extends AppCompatActivity {
             loadListFood(categoryId);
         }
     }
-
+    //Lista de comida
     private void loadListFood(String categoryId) {
         adapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(Food.class,
                 R.layout.food_item,
