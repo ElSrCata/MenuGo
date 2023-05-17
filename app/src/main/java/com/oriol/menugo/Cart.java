@@ -75,8 +75,8 @@ public class Cart extends AppCompatActivity {
 
     private void showAlertDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this);
-        alertDialog.setTitle("Un paso más!");
-        alertDialog.setMessage("Introduce tu dirección: ");
+        alertDialog.setTitle(R.string.dialogTitle);
+        alertDialog.setMessage(R.string.dialogText);
 
         final EditText edtAdress = new EditText(Cart.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -87,7 +87,7 @@ public class Cart extends AppCompatActivity {
         alertDialog.setView(edtAdress); //Add edit text to alert
         alertDialog.setIcon(R.drawable.cart);
 
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(R.string.confirmOrder, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Request request = new Request(Common.current_User.getPhone(), Common.current_User.getName(),
@@ -98,12 +98,12 @@ public class Cart extends AppCompatActivity {
                 requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
                 //Delete cart
                 new Database(getBaseContext()).cleanCart();
-                Toast.makeText(Cart.this, "Orden realizada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Cart.this, R.string.orderSubmitted, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
 
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(R.string.denegateOrder, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int i) {

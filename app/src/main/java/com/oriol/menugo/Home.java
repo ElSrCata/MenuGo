@@ -2,6 +2,7 @@ package com.oriol.menugo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.AdapterView;
@@ -12,6 +13,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Model.Category;
+import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
 import com.squareup.picasso.Picasso;
@@ -67,7 +71,7 @@ public class Home extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_menu, R.id.nav_orders, R.id.nav_cart, R.id.nav_log_out)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
@@ -116,7 +120,8 @@ public class Home extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -124,5 +129,48 @@ public class Home extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+
+        String ids = String.valueOf(id);
+        Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
+
+        switch (id){
+            case R.id.nav_menu:
+                Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_cart:
+                Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
+            case R.id.nav_orders:
+                Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
+
+        }
+
+        /*int id = item.getItemId();
+
+        if (id == R.id.nav_menu) {
+
+        } else if (id == R.id.nav_cart) {
+            Intent cartIntent = new Intent(Home.this, Cart.class);
+            Toast.makeText(this, "Click al carrito", Toast.LENGTH_SHORT).show();
+            startActivity(cartIntent);
+
+        } else if (id == R.id.nav_orders) {
+            Intent orderIntent = new Intent(Home.this, OrderStatus.class);
+            startActivity(orderIntent);
+
+        } else if (id == R.id.nav_log_out) {
+            Intent signIn = new Intent(Home.this, SignIn.class);
+            signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(signIn);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);*/
+        return super.onOptionsItemSelected(item);
     }
 }
