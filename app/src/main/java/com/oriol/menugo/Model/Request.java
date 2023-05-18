@@ -19,8 +19,8 @@ public class Request {
         this.name = name;
         this.address = address;
         this.total = total;
-        this.status = "0"; //Default is 0. 0-> Placed 1-> Shipping 2->Shipped
         this.foods = foods;
+        this.status = "0"; //Default is 0. 0-> Placed 1-> Shipping 2->Shipped
     }
 
     public String getStatus() {

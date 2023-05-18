@@ -8,6 +8,7 @@
     <string name="status0">Pedida</string>
     <string name="status1">En reparto</string>
     <string name="status2">Recibido</string>
+    <string name="searchbar">Busque su comida</string>
     <string name="salir">Salir</string>
     <string name="description">Descripción</string>
     <string name="placeorder">Realizar pedido</string>

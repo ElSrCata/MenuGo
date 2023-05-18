@@ -32,4 +32,14 @@
         android:backgroundTint="@android:color/white"
         app:srcCompat="@drawable/cart"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="90dp"
+        android:backgroundTint="@android:color/white"
+        app:srcCompat="@drawable/baseline_access_time_24"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

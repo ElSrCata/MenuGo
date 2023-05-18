@@ -6,6 +6,8 @@ public class User {
 
     private String Phone;
 
+    private String Staff;
+
     public User() {
 
     }
@@ -13,6 +15,15 @@ public class User {
     public User(String name, String password) {
         Name = name;
         Password = password;
+        Staff = "false";
+    }
+
+    public String getStaff() {
+        return Staff;
+    }
+
+    public void setStaff(String staff) {
+        Staff = staff;
     }
 
     public String getPhone() {

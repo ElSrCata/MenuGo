@@ -2,6 +2,7 @@ package com.oriol.menugo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -33,7 +34,7 @@ import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
 import com.squareup.picasso.Picasso;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
@@ -66,8 +67,18 @@ public class Home extends AppCompatActivity {
                 startActivity(cartIntent);
             }
         });
+
+        binding.appBarHome.ord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent orderIntent = new Intent(Home.this, OrderStatus.class);
+                startActivity(orderIntent);
+            }
+        });
+
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        binding.navView.setNavigationItemSelectedListener(this);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -118,10 +129,9 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_drawer, menu);
+        return true;
     }
 
     @Override
@@ -134,43 +144,33 @@ public class Home extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        return super.onOptionsItemSelected(item);
+    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
         int id = item.getItemId();
 
-        String ids = String.valueOf(id);
-        Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
-
-        switch (id){
-            case R.id.nav_menu:
-                Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_cart:
-                Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
-            case R.id.nav_orders:
-                Toast.makeText(this, ids, Toast.LENGTH_SHORT).show();
-
-        }
-
-        /*int id = item.getItemId();
-
-        if (id == R.id.nav_menu) {
-
-        } else if (id == R.id.nav_cart) {
+        if (id == R.id.nav_menu)
+        {
+            
+        } else if (id == R.id.nav_cart)
+        {
             Intent cartIntent = new Intent(Home.this, Cart.class);
-            Toast.makeText(this, "Click al carrito", Toast.LENGTH_SHORT).show();
             startActivity(cartIntent);
-
-        } else if (id == R.id.nav_orders) {
-            Intent orderIntent = new Intent(Home.this, OrderStatus.class);
-            startActivity(orderIntent);
-
-        } else if (id == R.id.nav_log_out) {
+        } else if (id == R.id.nav_orders)
+        {
+            Intent ordersIntent = new Intent(Home.this, OrderStatus.class);
+        } else if (id == R.id.nav_log_out)
+        {
             Intent signIn = new Intent(Home.this, SignIn.class);
             signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(signIn);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);*/
-        return super.onOptionsItemSelected(item);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
