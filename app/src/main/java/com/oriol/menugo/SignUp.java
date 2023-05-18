@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Model.User;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -40,35 +41,40 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final ProgressDialog mDialog = new ProgressDialog(SignUp.this);
-                mDialog.setMessage("Espera...");
-                mDialog.show();
+                if (Common.isConnectedToInternet(getBaseContext())) {
 
-                user_table.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                    //Comprobamos si el teléfono ya está en uso
+                    final ProgressDialog mDialog = new ProgressDialog(SignUp.this);
+                    mDialog.setMessage("Espera...");
+                    mDialog.show();
 
-                        if(dataSnapshot.child(edtPhone.getText().toString()).exists())
-                        {
-                            mDialog.dismiss();
-                            Toast.makeText(SignUp.this, "El teléfono ya está en uso", Toast.LENGTH_SHORT).show();
+                    user_table.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //Comprobamos si el teléfono ya está en uso
+
+                            if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
+                                mDialog.dismiss();
+                                Toast.makeText(SignUp.this, "El teléfono ya está en uso", Toast.LENGTH_SHORT).show();
+                            } else {
+                                mDialog.dismiss();
+                                User user = new User(edtName.getText().toString(), edtPassword.getText().toString());
+                                user_table.child(edtPhone.getText().toString()).setValue(user);
+                                Toast.makeText(SignUp.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
                         }
-                        else
-                        {
-                            mDialog.dismiss();
-                            User user = new User(edtName.getText().toString(), edtPassword.getText().toString());
-                            user_table.child(edtPhone.getText().toString()).setValue(user);
-                            Toast.makeText(SignUp.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
-                            finish();
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    Toast.makeText(SignUp.this, R.string.connection, Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
 

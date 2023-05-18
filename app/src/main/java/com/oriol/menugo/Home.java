@@ -78,7 +78,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        binding.navView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -146,9 +146,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         return super.onOptionsItemSelected(item);
     }
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
+        Toast.makeText(this, "Entra navigation", Toast.LENGTH_SHORT).show();
 
         int id = item.getItemId();
 

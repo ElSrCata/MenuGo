@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Database.Database;
 import com.oriol.menugo.Model.Food;
 import com.oriol.menugo.Model.Order;
@@ -80,8 +81,8 @@ public class FoodDetails extends AppCompatActivity {
             foodId = getIntent().getStringExtra("FoodId");
 
         }
-        if(!foodId.isEmpty())
-        {
+        if(!foodId.isEmpty()) {
+
             getDetailFood(foodId);
         }
     }

@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Model.Food;
 import com.oriol.menugo.ViewHolder.FoodViewHolder;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
@@ -62,7 +63,14 @@ public class FootList extends AppCompatActivity {
             categoryId = getIntent().getStringExtra("CategoryId");
         }
         if(!categoryId.isEmpty() && categoryId != null){
-            loadListFood(categoryId);
+
+            if(Common.isConnectedToInternet(getBaseContext())) {
+                loadListFood(categoryId);
+            } else
+            {
+                Toast.makeText(FootList.this, R.string.connection, Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         //Search

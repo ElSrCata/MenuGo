@@ -44,49 +44,52 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ProgressDialog mDialog = new ProgressDialog(SignIn.this);
-                mDialog.setMessage("Espera...");
-                mDialog.show();
+                if (Common.isConnectedToInternet(getBaseContext())) {
 
-                user_table.addValueEventListener(new ValueEventListener() {
+                    ProgressDialog mDialog = new ProgressDialog(SignIn.this);
+                    mDialog.setMessage("Espera...");
+                    mDialog.show();
 
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    user_table.addValueEventListener(new ValueEventListener() {
 
-                        //Comprueba si el usuario existe en la BBDD
-                        if (dataSnapshot.child(edtPhone.getText().toString()).exists())
-                        {
-                            //Cojemos la información del usuario
-                            mDialog.dismiss();
-                            User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
-                            //Hacemos el set del número de teléfono
-                            user.setPhone(edtPhone.getText().toString());
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            if (user.getPassword().equals(edtPassword.getText().toString()))
-                            {
-                                Intent homeIntent = new Intent(SignIn.this, Home.class);
-                                Common.current_User = user;
-                                startActivity(homeIntent);
-                                finish();
+                            //Comprueba si el usuario existe en la BBDD
+                            if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
+                                //Cojemos la información del usuario
+                                mDialog.dismiss();
+                                User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
+                                //Hacemos el set del número de teléfono
+                                user.setPhone(edtPhone.getText().toString());
+
+                                if (user.getPassword().equals(edtPassword.getText().toString())) {
+                                    Intent homeIntent = new Intent(SignIn.this, Home.class);
+                                    Common.current_User = user;
+                                    startActivity(homeIntent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(SignIn.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(SignIn.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                                mDialog.dismiss();
+                                Toast.makeText(SignIn.this, "El usuario no existe", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else
-                        {
-                            mDialog.dismiss();
-                            Toast.makeText(SignIn.this, "El usuario no existe", Toast.LENGTH_SHORT).show();
+
+
                         }
 
+                        @Override
+                        public void onCancelled(DatabaseError error) {
 
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-
-                    }
-                });
+                        }
+                    });
+                }
+                else
+                {
+                    Toast.makeText(SignIn.this, R.string.connection, Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
     }
