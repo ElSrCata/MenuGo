@@ -13,6 +13,7 @@
     <string name="selectAction">Seleccione acción</string>
     <string name="deleteItemCart">Borrar</string>
     <string name="emptyCart">Su cesta esta vacía!</string>
+    <string name="rememberme">Recuérdame</string>
     <string name="salir">Salir</string>
     <string name="description">Descripción</string>
     <string name="placeorder">Realizar pedido</string>

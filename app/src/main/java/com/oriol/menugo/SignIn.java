@@ -20,11 +20,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Model.User;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.rey.material.widget.CheckBox;
+
+import io.paperdb.Paper;
 
 public class SignIn extends AppCompatActivity {
 
     EditText edtPhone, edtPassword;
     Button btnSignIn;
+
+    CheckBox ckbRemember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,10 @@ public class SignIn extends AppCompatActivity {
         edtPhone = (MaterialEditText) findViewById(R.id.edtPhone);
 
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
+        ckbRemember = (CheckBox)findViewById(R.id.ckbRemember);
+
+        //Init Paper
+        Paper.init(this);
 
         //Iniciamos Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -45,6 +54,13 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (Common.isConnectedToInternet(getBaseContext())) {
+
+                    //Save user & password
+                    if(ckbRemember.isChecked())
+                    {
+                        Paper.book().write(Common.USER_KEY, edtPhone.getText().toString());
+                        Paper.book().write(Common.PWD_KEY, edtPassword.getText().toString());
+                    }
 
                     ProgressDialog mDialog = new ProgressDialog(SignIn.this);
                     mDialog.setMessage("Espera...");
