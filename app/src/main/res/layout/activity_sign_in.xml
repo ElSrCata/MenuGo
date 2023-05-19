@@ -56,7 +56,8 @@
             style="@style/Material.Drawable.CheckBox"
             android:text="@string/rememberme"
             android:textColor="@color/white"
-            app:cbd_strokeColor="@color/white"/>
+            app:cbd_strokeColor="@color/white"
+            app:cbd_tickColor="@color/colorPrimaryDark"/>
         
     </LinearLayout>
 

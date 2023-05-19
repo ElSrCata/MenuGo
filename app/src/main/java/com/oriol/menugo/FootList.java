@@ -146,7 +146,7 @@ public class FootList extends AppCompatActivity {
                         //Start new activity
                         Intent foodDetail = new Intent(FootList.this, FoodDetails.class);
                         //Sending the food
-                        foodDetail.putExtra("FoodId", adapter.getRef(position).getKey());
+                        foodDetail.putExtra("FoodId", searchAdapter.getRef(position).getKey());
                         startActivity(foodDetail);
                     }
                 });
