@@ -20,7 +20,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class SignUp extends AppCompatActivity {
 
-    MaterialEditText edtPhone, edtName, edtPassword;
+    MaterialEditText edtPhone, edtName, edtPassword, edtSecureCode;
     Button btnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class SignUp extends AppCompatActivity {
         edtName = (MaterialEditText) findViewById(R.id.edtName);
         edtPassword = (MaterialEditText) findViewById(R.id.edtPassword);
         edtPhone = (MaterialEditText) findViewById(R.id.edtPhone);
+        edtSecureCode = (MaterialEditText)findViewById(R.id.edtSecureCode);
 
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
@@ -57,7 +58,9 @@ public class SignUp extends AppCompatActivity {
                                 Toast.makeText(SignUp.this, "El teléfono ya está en uso", Toast.LENGTH_SHORT).show();
                             } else {
                                 mDialog.dismiss();
-                                User user = new User(edtName.getText().toString(), edtPassword.getText().toString());
+                                User user = new User(edtName.getText().toString(),
+                                        edtPassword.getText().toString(),
+                                        edtSecureCode.getText().toString());
                                 user_table.child(edtPhone.getText().toString()).setValue(user);
                                 Toast.makeText(SignUp.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
                                 finish();

@@ -14,6 +14,13 @@
     <string name="deleteItemCart">Borrar</string>
     <string name="emptyCart">Su cesta esta vacía!</string>
     <string name="rememberme">Recuérdame</string>
+    <string name="phone_number">Número de teléfono</string>
+    <string name="name">Nombre</string>
+    <string name="password">Contraseña</string>
+    <string name="secureCode">Código de seguridad</string>
+    <string name="forgotpwd">Olvidó su contraseña?</string>
+    <string name="introduceSecurityCode">Introduzca su código de seguridad</string>
+    <string name="yourpassword">Tu contraseña: </string>
     <string name="salir">Salir</string>
     <string name="description">Descripción</string>
     <string name="placeorder">Realizar pedido</string>

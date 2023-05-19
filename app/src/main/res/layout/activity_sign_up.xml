@@ -19,11 +19,10 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edtPhone"
-            android:hint="Numero Teléfono"
+            android:hint="@string/phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/white"
-            android:text="602217367"
             android:textColor="@color/white"
             android:textSize="34sp"
             android:inputType="phone"
@@ -35,11 +34,10 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edtName"
-            android:hint="Nombre"
+            android:hint="@string/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/white"
-            android:text="Santi"
             android:textColor="@color/white"
             android:textSize="34sp"
             android:inputType="text"
@@ -51,14 +49,28 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edtPassword"
-            android:hint="Contraseña"
+            android:hint="@string/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/white"
-            android:text="1234"
             android:textColor="@color/white"
             android:textSize="34sp"
             android:inputType="textPassword"
+            app:met_baseColor="@color/white"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="11"
+            app:met_primaryColor="@color/white"
+            app:met_singleLineEllipsis="true"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/edtSecureCode"
+            android:hint="@string/secureCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:inputType="text"
             app:met_baseColor="@color/white"
             app:met_floatingLabel="highlight"
             app:met_maxCharacters="11"

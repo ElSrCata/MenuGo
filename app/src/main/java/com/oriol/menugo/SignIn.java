@@ -3,13 +3,17 @@ package com.oriol.menugo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +34,10 @@ public class SignIn extends AppCompatActivity {
     Button btnSignIn;
 
     CheckBox ckbRemember;
+    TextView txtForgotPswd;
+
+    FirebaseDatabase database;
+    DatabaseReference user_table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +49,21 @@ public class SignIn extends AppCompatActivity {
 
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
         ckbRemember = (CheckBox)findViewById(R.id.ckbRemember);
+        txtForgotPswd = (TextView)findViewById(R.id.txtForgotPswd);
 
         //Init Paper
         Paper.init(this);
 
         //Iniciamos Firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference user_table = database.getReference("User");
+       database = FirebaseDatabase.getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/");
+       user_table = database.getReference("User");
+
+        txtForgotPswd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showForgotPwd();
+            }
+        });
 
         btnSignIn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -79,13 +95,20 @@ public class SignIn extends AppCompatActivity {
                                 //Hacemos el set del número de teléfono
                                 user.setPhone(edtPhone.getText().toString());
 
-                                if (user.getPassword().equals(edtPassword.getText().toString())) {
-                                    Intent homeIntent = new Intent(SignIn.this, Home.class);
-                                    Common.current_User = user;
-                                    startActivity(homeIntent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(SignIn.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                                if (edtPassword.getText().toString().isEmpty() || edtPhone.getText().toString().isEmpty())
+                                {
+                                    Toast.makeText(SignIn.this, "Rellene todos los campos", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    if (user.getPassword().equals(edtPassword.getText().toString())) {
+                                        Intent homeIntent = new Intent(SignIn.this, Home.class);
+                                        Common.current_User = user;
+                                        startActivity(homeIntent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(SignIn.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } else {
                                 mDialog.dismiss();
@@ -108,5 +131,54 @@ public class SignIn extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showForgotPwd() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.forgotpwd);
+        builder.setMessage(R.string.introduceSecurityCode);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View forgot_view = inflater.inflate(R.layout.forgot_password, null);
+
+        builder.setView(forgot_view);
+        builder.setIcon(R.drawable.baseline_security_24);
+
+        MaterialEditText edtPhone = (MaterialEditText) forgot_view.findViewById(R.id.edtPhone);
+        MaterialEditText edtSecureCode = (MaterialEditText) forgot_view.findViewById(R.id.edtSecureCode);
+
+        builder.setPositiveButton(R.string.confirmOrder, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                user_table.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        User user = snapshot.child(edtPhone.getText().toString()).getValue(User.class);
+
+                        if(user.getSecureCode().equals(edtSecureCode.getText().toString()))
+                            Toast.makeText(SignIn.this, "Tu contraseña: " + user.getPassword(), Toast.LENGTH_SHORT).show();
+
+                        else
+                            Toast.makeText(SignIn.this, "Código de seguridad erróneo", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        builder.setNegativeButton(R.string.denegateOrder, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
     }
 }
