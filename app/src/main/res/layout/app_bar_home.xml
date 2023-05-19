@@ -42,4 +42,15 @@
         android:backgroundTint="@android:color/white"
         app:srcCompat="@drawable/baseline_access_time_24"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="20dp"
+        android:backgroundTint="@android:color/white"
+        app:srcCompat="@drawable/baseline_exit_to_app_24"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
