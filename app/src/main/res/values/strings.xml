@@ -21,6 +21,11 @@
     <string name="forgotpwd">Olvidó su contraseña?</string>
     <string name="introduceSecurityCode">Introduzca su código de seguridad</string>
     <string name="yourpassword">Tu contraseña: </string>
+    <string name="submit">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="rateTitle">Califica esta comida</string>
+    <string name="rateDesc">Seleccione las estrellas i de su opinión</string>
+    <string name="rateHint">Escriba su comentario...</string>
     <string name="salir">Salir</string>
     <string name="description">Descripción</string>
     <string name="placeorder">Realizar pedido</string>
