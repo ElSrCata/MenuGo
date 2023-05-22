@@ -85,7 +85,7 @@ public class Database extends SQLiteAssetHelper {
     public boolean isFavorite(String foodId)
     {
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("SELECT * FROM Favorites WHERE FoodId='%s';", foodId);
+        String query = String.format("SELECT * FROM Favorites WHERE foodId='%s';", foodId);
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.getCount() <= 0)

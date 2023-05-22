@@ -39,6 +39,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
 
+    //Implementing PayPal SDK
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
+
+
 
     implementation 'io.paperdb:paperdb:2.1'
     implementation 'com.stepstone.apprating:app-rating:2.0.0'

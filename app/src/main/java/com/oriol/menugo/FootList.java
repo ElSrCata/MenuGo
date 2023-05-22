@@ -153,7 +153,7 @@ public class FootList extends AppCompatActivity {
                         //Start new activity
                         Intent foodDetail = new Intent(FootList.this, FoodDetails.class);
                         //Sending the food
-                        foodDetail.putExtra("FoodId", searchAdapter.getRef(position).getKey());
+                        foodDetail.putExtra("foodId", searchAdapter.getRef(position).getKey());
                         startActivity(foodDetail);
                     }
                 });
@@ -163,7 +163,7 @@ public class FootList extends AppCompatActivity {
     }
 
     private void loadSuggest() {
-        foodList.orderByChild("MenuId").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
+        foodList.orderByChild("menuId").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot postSnapshot:snapshot.getChildren())
@@ -186,7 +186,7 @@ public class FootList extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(Food.class,
                 R.layout.food_item,
                 FoodViewHolder.class,
-                foodList.orderByChild("MenuId").equalTo(categoryId)) {
+                foodList.orderByChild("menuId").equalTo(categoryId)) {
             @Override
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
                 viewHolder.food_name.setText(model.getName());
@@ -224,7 +224,7 @@ public class FootList extends AppCompatActivity {
                         //Start new activity
                         Intent foodDetail = new Intent(FootList.this, FoodDetails.class);
                         //Sending the food
-                        foodDetail.putExtra("FoodId", adapter.getRef(position).getKey());
+                        foodDetail.putExtra("foodId", adapter.getRef(position).getKey());
                         startActivity(foodDetail);
                     }
                 });
