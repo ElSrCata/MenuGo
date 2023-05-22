@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andremion.counterfab.CounterFab;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.oriol.menugo.Common.Common;
+import com.oriol.menugo.Database.Database;
 import com.oriol.menugo.Model.Category;
 import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
@@ -46,6 +48,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     RecyclerView.LayoutManager layoutManager;
     FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
 
+    CounterFab fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +64,17 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         database = FirebaseDatabase.getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/");
         category = database.getReference("Category");
 
-        binding.appBarHome.fab.setOnClickListener(new View.OnClickListener() {
+
+        fab = (CounterFab) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cartIntent = new Intent(Home.this, Cart.class);
                 startActivity(cartIntent);
             }
         });
+
+        fab.setCount(new Database(this).getCountCart());
 
         binding.appBarHome.ord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +143,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
         };
         recycler_menu.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fab.setCount(new Database(this).getCountCart());
     }
 
     @Override
