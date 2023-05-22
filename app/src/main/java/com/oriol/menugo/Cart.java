@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.oriol.menugo.Database.Database;
 import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.Model.Request;
 import com.oriol.menugo.ViewHolder.CartAdapter;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -83,20 +85,22 @@ public class Cart extends AppCompatActivity {
         alertDialog.setTitle(R.string.dialogTitle);
         alertDialog.setMessage(R.string.dialogText);
 
-        final EditText edtAdress = new EditText(Cart.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        );
-        edtAdress.setLayoutParams(lp);
-        alertDialog.setView(edtAdress); //Add edit text to alert
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        View order_address_comment = layoutInflater.inflate(R.layout.order_address_comment, null);
+
+        final MaterialEditText edtAddress = (MaterialEditText)order_address_comment.findViewById(R.id.edtAddress);
+        final MaterialEditText edtComment = (MaterialEditText)order_address_comment.findViewById(R.id.edtComment);
+
+        alertDialog.setView(order_address_comment);
+
         alertDialog.setIcon(R.drawable.cart);
 
         alertDialog.setPositiveButton(R.string.confirmOrder, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Request request = new Request(Common.current_User.getPhone(), Common.current_User.getName(),
-                        edtAdress.getText().toString(), txtTotalPrice.getText().toString(), cart
+                        edtAddress.getText().toString(), txtTotalPrice.getText().toString(),
+                        "0", edtComment.getText().toString(), cart
                 );
 
                 //Submit order to firebase

@@ -27,6 +27,8 @@
     <string name="rateDesc">Seleccione las estrellas i de su opinión</string>
     <string name="rateHint">Escriba su comentario...</string>
     <string name="salir">Salir</string>
+    <string name="address">Dirección</string>
+    <string name="comment">Comentario</string>
     <string name="description">Descripción</string>
     <string name="placeorder">Realizar pedido</string>
     <string name="dialogTitle">Un paso más!</string>
