@@ -37,6 +37,15 @@
                 android:layout_height="wrap_content"/>
 
             <ImageView
+                android:id="@+id/btn_cart_quick"
+                android:src="@drawable/cart"
+                app:tint="@color/colorAccent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
                 android:id="@+id/fav"
                 android:src="@drawable/baseline_favorite_border_24"
                 app:tint="@color/white"
@@ -44,28 +53,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
+
+
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:layout_margin="10dp"
-                android:id="@+id/food_price"
-                android:text="100$"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/btn_cart_quick"
-                android:src="@drawable/cart"
-                app:tint="@color/colorAccent"
-                android:layout_alignParentRight="true"
-                android:layour_marginRight="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 

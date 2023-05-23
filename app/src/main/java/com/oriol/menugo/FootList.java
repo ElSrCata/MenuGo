@@ -23,6 +23,7 @@ import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Database.Database;
 import com.oriol.menugo.Model.Food;
+import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.ViewHolder.FoodViewHolder;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.squareup.picasso.Picasso;
@@ -191,6 +192,24 @@ public class FootList extends AppCompatActivity {
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
                 viewHolder.food_name.setText(model.getName());
                 Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.food_image);
+
+
+                //Quick cart
+                viewHolder.quick_cart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new Database(getBaseContext()).addToCart(new Order(
+                                adapter.getRef(position).getKey(),
+                                model.getName(),
+                                "1",
+                                model.getPrice(),
+                                model.getDiscount()
+                        ));
+
+                        Toast.makeText(FootList.this, "Añadido el carrito", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
                 //Add Favorites
                 if(localDB.isFavorite(adapter.getRef(position).getKey()))

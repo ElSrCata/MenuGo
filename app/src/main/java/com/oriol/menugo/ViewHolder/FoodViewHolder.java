@@ -11,7 +11,7 @@ import com.oriol.menugo.R;
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView food_name;
-    public ImageView food_image, fav_image;
+    public ImageView food_image, fav_image, quick_cart;
     private ItemClickListener itemClickListener;
 
     public interface ItemClickListener {
@@ -28,6 +28,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         food_name = (TextView)itemView.findViewById(R.id.food_name);
         food_image = (ImageView)itemView.findViewById(R.id.food_image);
         fav_image = (ImageView)itemView.findViewById(R.id.fav);
+        quick_cart = (ImageView)itemView.findViewById(R.id.btn_cart_quick);
 
         itemView.setOnClickListener(this);
     }
