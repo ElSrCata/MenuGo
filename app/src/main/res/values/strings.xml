@@ -26,6 +26,7 @@
     <string name="rateTitle">Califica esta comida</string>
     <string name="rateDesc">Seleccione las estrellas i de su opinión</string>
     <string name="rateHint">Escriba su comentario...</string>
+    <string name="updatedOrder">Su pedido ha sido actualizado!</string>
     <string name="shipToAddress">Enviar a esta dirección</string>
     <string name="salir">Salir</string>
     <string name="address">Dirección</string>
