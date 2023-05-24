@@ -119,6 +119,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
 
+        binding.navView.setNavigationItemSelectedListener(this);
         loadMenu();
     }
 
@@ -190,6 +191,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         } else if (id == R.id.nav_orders)
         {
             Intent ordersIntent = new Intent(Home.this, OrderStatus.class);
+            startActivity(ordersIntent);
         } else if (id == R.id.nav_log_out)
         {
             Intent signIn = new Intent(Home.this, SignIn.class);
