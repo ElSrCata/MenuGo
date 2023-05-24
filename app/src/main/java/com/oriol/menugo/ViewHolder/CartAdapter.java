@@ -1,6 +1,5 @@
 package com.oriol.menugo.ViewHolder;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.ContextMenu;
@@ -14,14 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.oriol.menugo.Cart;
 import com.oriol.menugo.Common.Common;
-import com.oriol.menugo.Database.Database;
 import com.oriol.menugo.Interface.ItemClickListener;
 import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.R;
-import com.stepstone.apprating.AppRatingDialog;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,7 +26,7 @@ import java.util.Locale;
 class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     public TextView txt_cart_name, txt_price;
-    public ElegantNumberButton img_cart_count;
+    public ImageView img_cart_count;
 
     private ItemClickListener itemClickListener;
 
@@ -43,7 +38,7 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         super(itemView);
         txt_cart_name = (TextView) itemView.findViewById(R.id.cart_item_name);
         txt_price = (TextView) itemView.findViewById(R.id.cart_item_price);
-        img_cart_count = (ElegantNumberButton) itemView.findViewById(R.id.btn_quantity);
+        img_cart_count = (ImageView) itemView.findViewById(R.id.cart_item_count);
 
         itemView.setOnCreateContextMenuListener(this);
     }
@@ -65,51 +60,27 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
     private List<Order> listData = new ArrayList<>();
-    private Cart cart;
+    private Context context;
 
-    public CartAdapter(List<Order> listData, Cart cart) {
+    public CartAdapter(List<Order> listData, Context context) {
         this.listData = listData;
-        this.cart = cart;
+        this.context = context;
     }
 
     @Override
     public CartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        LayoutInflater inflater = LayoutInflater.from(cart);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View itemView = inflater.inflate(R.layout.cart_layout, parent, false);
         return new CartViewHolder(itemView);
 
     }
 
     @Override
-    public void onBindViewHolder(CartViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(CartViewHolder holder, int position) {
 
-        //TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuantity(), Color.RED);
-        //holder.img_cart_count.setImageDrawable(drawable);
-
-        holder.img_cart_count.setNumber(listData.get(position).getProductId());
-        holder.img_cart_count.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
-            @Override
-            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-                Order order = listData.get(position);
-                order.setQuantity(String.valueOf(newValue));
-                new Database(cart).updateCart(order);
-
-                double total = 0;
-                List<Order> orders = new Database(cart).getCarts();
-
-                for (Order item:orders){
-
-                    total += (Double.parseDouble(order.getPrice())) * (Double.parseDouble(item.getQuantity()));
-                }
-
-                Locale locale = new Locale("en", "US");
-                NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
-
-                cart.txtTotalPrice.setText(fmt.format(total));
-
-            }
-        });
+        TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuantity(), Color.RED);
+        holder.img_cart_count.setImageDrawable(drawable);
 
         Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
