@@ -32,7 +32,6 @@ import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Database.Database;
 import com.oriol.menugo.Model.Category;
 import com.oriol.menugo.Model.Order;
-import com.oriol.menugo.Service.ListenOrder;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
 import com.squareup.picasso.Picasso;
@@ -77,6 +76,24 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         fab.setCount(new Database(this).getCountCart());
 
+        binding.appBarHome.ord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent orderIntent = new Intent(Home.this, OrderStatus.class);
+                startActivity(orderIntent);
+            }
+        });
+
+        binding.appBarHome.log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent signIn = new Intent(Home.this, SignIn.class);
+                signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(signIn);
+            }
+        });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -102,12 +119,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
 
-        binding.navView.setNavigationItemSelectedListener(this);
         loadMenu();
-
-        //Register Service
-        Intent service = new Intent(Home.this, ListenOrder.class);
-        startService(service);
     }
 
     public void loadMenu() {
@@ -178,7 +190,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         } else if (id == R.id.nav_orders)
         {
             Intent ordersIntent = new Intent(Home.this, OrderStatus.class);
-            startActivity(ordersIntent);
         } else if (id == R.id.nav_log_out)
         {
             Intent signIn = new Intent(Home.this, SignIn.class);

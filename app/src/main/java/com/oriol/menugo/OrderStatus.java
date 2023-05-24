@@ -51,11 +51,20 @@ public class OrderStatus extends AppCompatActivity {
             @Override
             protected void populateViewHolder(OrderViewHolder viewHolder, Request request, int position) {
                 viewHolder.txtOrderId.setText(adapter.getRef(position).getKey());
-                viewHolder.txtOrderStatus.setText(Common.convertCodeToStatus(request.getStatus()));
+                viewHolder.txtOrderStatus.setText(convertCodeToStatus(request.getStatus()));
                 viewHolder.txtOrderAddress.setText(request.getAddress());
                 viewHolder.txtOrderPhone.setText(request.getPhone());
             }
         };
         recyclerView.setAdapter(adapter);
+    }
+
+    private int convertCodeToStatus(String status) {
+        if (status.equals("0"))
+            return R.string.status0;
+        else if (status.equals("1"))
+            return R.string.status1;
+        else
+            return R.string.status2;
     }
 }
