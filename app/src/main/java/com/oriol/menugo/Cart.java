@@ -133,6 +133,19 @@ public class Cart extends AppCompatActivity {
                 String formatAmount = txtTotalPrice.getText().toString().replace("$", "")
                         .replace(",", "");
 
+                Request request = new Request(Common.current_User.getPhone(), Common.current_User.getName(),
+                        address, txtTotalPrice.getText().toString(),
+                        "0", comment, "1", cart
+                );
+
+                //Submit order to firebase
+                requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
+
+                //Delete cart
+                new Database(getBaseContext()).cleanCart();
+                Toast.makeText(Cart.this, R.string.orderSubmitted, Toast.LENGTH_SHORT).show();
+                finish();
+
                 PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount), "USD",
                         "MenuGo", PayPalPayment.PAYMENT_INTENT_SALE);
 
@@ -170,6 +183,7 @@ public class Cart extends AppCompatActivity {
 
                         JSONObject jsonObject = new JSONObject(paymentDetail);
 
+                        /*
                         Request request = new Request(Common.current_User.getPhone(), Common.current_User.getName(),
                                 address, txtTotalPrice.getText().toString(),
                                 "0", comment, jsonObject.getJSONObject("response").getString("state"), cart
@@ -181,7 +195,7 @@ public class Cart extends AppCompatActivity {
                         //Delete cart
                         new Database(getBaseContext()).cleanCart();
                         Toast.makeText(Cart.this, R.string.orderSubmitted, Toast.LENGTH_SHORT).show();
-                        finish();
+                        finish();*/
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

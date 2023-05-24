@@ -2,6 +2,7 @@ package com.oriol.menugo.ViewHolder;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.Image;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.oriol.menugo.Cart;
 import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Interface.ItemClickListener;
 import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.R;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import java.util.Locale;
 class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     public TextView txt_cart_name, txt_price;
-    public ImageView img_cart_count;
+    public ImageView img_cart_count, cart_image;
 
     private ItemClickListener itemClickListener;
 
@@ -39,6 +42,7 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         txt_cart_name = (TextView) itemView.findViewById(R.id.cart_item_name);
         txt_price = (TextView) itemView.findViewById(R.id.cart_item_price);
         img_cart_count = (ImageView) itemView.findViewById(R.id.cart_item_count);
+        cart_image = (ImageView)itemView.findViewById(R.id.cart_image);
 
         itemView.setOnCreateContextMenuListener(this);
     }
@@ -60,17 +64,17 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
     private List<Order> listData = new ArrayList<>();
-    private Context context;
+    private Cart cart;
 
-    public CartAdapter(List<Order> listData, Context context) {
+    public CartAdapter(List<Order> listData, Cart cart) {
         this.listData = listData;
-        this.context = context;
+        this.cart = cart;
     }
 
     @Override
     public CartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(cart);
         View itemView = inflater.inflate(R.layout.cart_layout, parent, false);
         return new CartViewHolder(itemView);
 
@@ -78,6 +82,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
     @Override
     public void onBindViewHolder(CartViewHolder holder, int position) {
+
+        Picasso.with(cart.getBaseContext()).load(listData.get(position).getImage()).resize(70, 70)
+                .centerCrop().into(holder.cart_image);
 
         TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuantity(), Color.RED);
         holder.img_cart_count.setImageDrawable(drawable);

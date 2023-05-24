@@ -203,7 +203,8 @@ public class FootList extends AppCompatActivity {
                                 model.getName(),
                                 "1",
                                 model.getPrice(),
-                                model.getDiscount()
+                                model.getDiscount(),
+                                model.getImage()
                         ));
 
                         Toast.makeText(FootList.this, "Añadido el carrito", Toast.LENGTH_SHORT).show();
