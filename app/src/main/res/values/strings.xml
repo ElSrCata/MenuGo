@@ -16,7 +16,12 @@
     <string name="rememberme">Recuérdame</string>
     <string name="phone_number">Número de teléfono</string>
     <string name="name">Nombre</string>
+    <string name="changePassword">Cambiar contraseña</string>
+    <string name="info">Rellene toda la información</string>
+    <string name="change">Cambiar</string>
     <string name="password">Contraseña</string>
+    <string name="newPassword">Nueva contraseña</string>
+    <string name="repeatPassword">Repita contraseña</string>
     <string name="secureCode">Código de seguridad</string>
     <string name="forgotpwd">Olvidó su contraseña?</string>
     <string name="introduceSecurityCode">Introduzca su código de seguridad</string>

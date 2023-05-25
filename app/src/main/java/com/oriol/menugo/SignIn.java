@@ -82,7 +82,7 @@ public class SignIn extends AppCompatActivity {
                     mDialog.setMessage("Espera...");
                     mDialog.show();
 
-                    user_table.addValueEventListener(new ValueEventListener() {
+                    user_table.addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -106,6 +106,8 @@ public class SignIn extends AppCompatActivity {
                                         Common.current_User = user;
                                         startActivity(homeIntent);
                                         finish();
+
+                                        user_table.removeEventListener(this);
                                     } else {
                                         Toast.makeText(SignIn.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
                                     }

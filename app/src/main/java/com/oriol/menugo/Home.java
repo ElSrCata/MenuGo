@@ -1,7 +1,10 @@
 package com.oriol.menugo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +15,9 @@ import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,7 +40,13 @@ import com.oriol.menugo.Model.Category;
 import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -76,24 +88,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         fab.setCount(new Database(this).getCountCart());
 
-        binding.appBarHome.ord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent orderIntent = new Intent(Home.this, OrderStatus.class);
-                startActivity(orderIntent);
-            }
-        });
-
-        binding.appBarHome.log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent signIn = new Intent(Home.this, SignIn.class);
-                signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(signIn);
-            }
-        });
-
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -119,6 +113,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
 
+        binding.navView.setNavigationItemSelectedListener(this);
         loadMenu();
     }
 
@@ -189,16 +184,89 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             startActivity(cartIntent);
         } else if (id == R.id.nav_orders)
         {
-            Intent ordersIntent = new Intent(Home.this, OrderStatus.class);
+            Intent orderIntent = new Intent(Home.this, OrderStatus.class);
+            startActivity(orderIntent);
         } else if (id == R.id.nav_log_out)
         {
             Intent signIn = new Intent(Home.this, SignIn.class);
             signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(signIn);
+        } else if (id == R.id.nav_chgPsswd)
+        {
+            showChangePasswordDialog();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showChangePasswordDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Home.this);
+        alertDialog.setTitle(R.string.changePassword).setMessage(R.string.info);
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View layout_pwd = inflater.inflate(R.layout.change_password, null);
+
+        MaterialEditText edtPassword = (MaterialEditText) layout_pwd.findViewById(R.id.editPassword);
+        MaterialEditText edtNewPassword = (MaterialEditText) layout_pwd.findViewById(R.id.edtNewPassword);
+        MaterialEditText edtRepeatPassword = (MaterialEditText) layout_pwd.findViewById(R.id.edtRepeatPassword);
+
+        alertDialog.setView(layout_pwd);
+
+        alertDialog.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                android.app.AlertDialog waitingDialog = new SpotsDialog(Home.this);
+                waitingDialog.show();
+
+                if (edtPassword.getText().toString().equals(Common.current_User.getPassword()))
+                {
+                    if (edtNewPassword.getText().toString().equals(edtRepeatPassword.getText().toString()))
+                    {
+                        Map<String, Object> passwordUpdate = new HashMap<>();
+
+                        passwordUpdate.put("password", edtNewPassword.getText().toString());
+
+                        DatabaseReference user = FirebaseDatabase
+                                .getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/")
+                                .getReference("User");
+
+                        user.child(Common.current_User.getPhone()).updateChildren(passwordUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                waitingDialog.dismiss();
+                                Toast.makeText(Home.this, "Contraseña actualizada", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Home.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        Toast.makeText(Home.this, "Las contraseñas no coincide", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(Home.this, "Contraseña anterior incorrecta", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
+
     }
 }
