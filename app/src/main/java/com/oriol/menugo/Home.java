@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +21,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -45,8 +43,6 @@ import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Database.Database;
 import com.oriol.menugo.Model.Banner;
 import com.oriol.menugo.Model.Category;
-import com.oriol.menugo.Model.Food;
-import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
 import com.rengwuxian.materialedittext.MaterialEditText;
