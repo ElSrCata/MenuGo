@@ -22,6 +22,10 @@
     <string name="password">Contraseña</string>
     <string name="newPassword">Nueva contraseña</string>
     <string name="repeatPassword">Repita contraseña</string>
+    <string name="paymentMethod">Método de pago: </string>
+    <string name="onDelivery">En la entrega</string>
+    <string name="payed">Pagado</string>
+    <string name="unPayed">No pagado</string>
     <string name="secureCode">Código de seguridad</string>
     <string name="forgotpwd">Olvidó su contraseña?</string>
     <string name="introduceSecurityCode">Introduzca su código de seguridad</string>

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -118,6 +119,9 @@ public class Cart extends AppCompatActivity {
         final MaterialEditText edtAddress = (MaterialEditText)order_address_comment.findViewById(R.id.edtAddress);
         final MaterialEditText edtComment = (MaterialEditText)order_address_comment.findViewById(R.id.edtComment);
 
+        final RadioButton rdiOnDelivery = (RadioButton) order_address_comment.findViewById(R.id.onDelivery);
+        final RadioButton rdiPayPal = (RadioButton) order_address_comment.findViewById(R.id.rdyPayPal);
+
         alertDialog.setView(order_address_comment);
 
         alertDialog.setIcon(R.drawable.cart);
@@ -130,29 +134,56 @@ public class Cart extends AppCompatActivity {
                 address = edtAddress.getText().toString();
                 comment = edtComment.getText().toString();
 
-                String formatAmount = txtTotalPrice.getText().toString().replace("$", "")
-                        .replace(",", "");
+                //Check payment method
+                if (!rdiOnDelivery.isChecked() && !rdiPayPal.isChecked())
+                {
+                    Toast.makeText(Cart.this, "Seleccione un método de pago", Toast.LENGTH_SHORT).show();
 
-                Request request = new Request(Common.current_User.getPhone(), Common.current_User.getName(),
-                        address, txtTotalPrice.getText().toString(),
-                        "0", comment, "1", cart
-                );
+                }
+                else if (rdiPayPal.isChecked())
+                {
+                    String formatAmount = txtTotalPrice.getText().toString().replace("$", "")
+                            .replace(",", "");
 
-                //Submit order to firebase
-                requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
+                    Request request = new Request(Common.current_User.getPhone(), Common.current_User.getName(),
+                            address, txtTotalPrice.getText().toString(),
+                            "0", comment, "Pagado", "PayPal",cart
+                    );
 
-                //Delete cart
-                new Database(getBaseContext()).cleanCart();
-                Toast.makeText(Cart.this, R.string.orderSubmitted, Toast.LENGTH_SHORT).show();
-                finish();
+                    //Submit order to firebase
+                    requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
-                PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount), "USD",
-                        "MenuGo", PayPalPayment.PAYMENT_INTENT_SALE);
+                    //Delete cart
+                    new Database(getBaseContext()).cleanCart();
+                    Toast.makeText(Cart.this, R.string.orderSubmitted, Toast.LENGTH_SHORT).show();
+                    finish();
 
-                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
-                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
-                startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+                    PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount), "USD",
+                            "MenuGo", PayPalPayment.PAYMENT_INTENT_SALE);
+
+                    Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                    intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+                    intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+                    startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+                }
+                else if (rdiOnDelivery.isChecked())
+                {
+                    String formatAmount = txtTotalPrice.getText().toString().replace("$", "")
+                            .replace(",", "");
+
+                    Request request = new Request(Common.current_User.getPhone(), Common.current_User.getName(),
+                            address, txtTotalPrice.getText().toString(),
+                            "0", comment, "No Pagado", "onDelivery",cart
+                    );
+
+                    //Submit order to firebase
+                    requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
+
+                    //Delete cart
+                    new Database(getBaseContext()).cleanCart();
+                    Toast.makeText(Cart.this, R.string.orderSubmitted, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
 
