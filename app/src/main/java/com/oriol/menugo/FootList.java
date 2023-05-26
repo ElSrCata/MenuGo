@@ -140,7 +140,7 @@ public class FootList extends AppCompatActivity {
     private void startSearch(CharSequence text) {
 
         searchAdapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(
-                Food.class, R.layout.food_item, FoodViewHolder.class, foodList.orderByChild("Name").equalTo(text.toString())
+                Food.class, R.layout.food_item, FoodViewHolder.class, foodList.orderByChild("name").equalTo(text.toString())
         ) {
             @Override
             protected void populateViewHolder(FoodViewHolder foodViewHolder, Food food, int i) {
