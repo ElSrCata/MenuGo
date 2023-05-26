@@ -14,6 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,11 +36,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.oriol.menugo.Common.Common;
 import com.oriol.menugo.Database.Database;
+import com.oriol.menugo.Model.Banner;
 import com.oriol.menugo.Model.Category;
+import com.oriol.menugo.Model.Food;
 import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.ViewHolder.MenuViewHolder;
 import com.oriol.menugo.databinding.ActivityHomeBinding;
@@ -60,6 +69,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     RecyclerView.LayoutManager layoutManager;
     FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
 
+    //Slider
+    HashMap<String, String> image_list;
+    SliderLayout sliderLayout;
+
     CounterFab fab;
 
 
@@ -75,7 +88,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         //Firebase
         database = FirebaseDatabase.getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/");
         category = database.getReference("Category");
-
 
         fab = (CounterFab) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -114,10 +126,70 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         recycler_menu.setLayoutManager(layoutManager);
 
         binding.navView.setNavigationItemSelectedListener(this);
+
         loadMenu();
+        //Setup Slider
+        setupSlider();
+    }
+
+    private void setupSlider() {
+        sliderLayout = (SliderLayout) findViewById(R.id.slider);
+        image_list = new HashMap<>();
+
+        DatabaseReference banner = database.getReference("Banner");
+
+        banner.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot postSnapshot:snapshot.getChildren())
+                {
+                    Banner banner = postSnapshot.getValue(Banner.class);
+                    image_list.put(banner.getName()+"@@@"+banner.getId(), banner.getImage());
+                }
+                for (String key:image_list.keySet())
+                {
+                    //Split by _ to take name and id of the food
+                    String[] keySplit = key.split("@@@");
+                    String nameOfFood = keySplit[0];
+                    String idOfFood = keySplit[1];
+
+                    TextSliderView textSliderView = new TextSliderView(getBaseContext());
+                    textSliderView
+                            .description(nameOfFood)
+                            .image(image_list.get(key))
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                    Intent intent = new Intent(Home.this, FoodDetails.class);
+                                    //Sending food id to FoodDetails
+                                    intent.putExtras(textSliderView.getBundle());
+                                    startActivity(intent);
+                                }
+                            });
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle().putString("foodId", idOfFood);
+
+                    sliderLayout.addSlider(textSliderView);
+
+                    banner.removeEventListener(this);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(4000);
     }
 
     public void loadMenu() {
+
         adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
@@ -138,6 +210,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
         };
         recycler_menu.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        sliderLayout.stopAutoCycle();
     }
 
     @Override
@@ -170,8 +248,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        Toast.makeText(this, "Entra navigation", Toast.LENGTH_SHORT).show();
 
         int id = item.getItemId();
 
