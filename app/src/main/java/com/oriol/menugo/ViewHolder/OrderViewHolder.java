@@ -8,12 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.oriol.menugo.Interface.ItemClickListener;
 import com.oriol.menugo.R;
 
+/**
+ * @author Oriol
+ */
 public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    //Definición variables
     public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrderAddress;
 
     private ItemClickListener itemClickListener;
 
+    /**
+     * ViewHolder de la orden
+     * @param itemView Vista del item
+     */
     public OrderViewHolder(View itemView) {
         super(itemView);
 
@@ -29,6 +37,10 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
         this.itemClickListener = itemClickListener;
     }
 
+    /**
+     * OnClick de la vista
+     * @param v La vista que fue pulsada
+     */
     @Override
     public void onClick(View v) {
 

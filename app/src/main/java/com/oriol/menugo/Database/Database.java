@@ -11,14 +11,25 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase para guardar las funciones relacionadas con SQL
+ * @author oriol
+ */
 public class Database extends SQLiteAssetHelper {
+    //Definición variables
     private static final String DB_NAME="MenuGoDB.db";
     private static final int DB_VER=1;
+
+    /**
+     * Constructor de la clase
+     * @param context
+     */
     public Database(Context context) {
 
         super(context, DB_NAME,null,DB_VER);
     }
 
+    //Variable Lista para guardar los carritos de compra
     public List<Order> getCarts()
     {
         SQLiteDatabase db = getReadableDatabase();
@@ -49,6 +60,10 @@ public class Database extends SQLiteAssetHelper {
         return result;
     }
 
+    /**
+     * Método para añadir items al carrito
+     * @param order item pedido
+     */
     public void addToCart(Order order){
 
         SQLiteDatabase db = getReadableDatabase();
@@ -62,6 +77,9 @@ public class Database extends SQLiteAssetHelper {
         db.execSQL(query);
     }
 
+    /**
+     * Método para limpiar el carrito de la compra
+     */
     public void cleanCart(){
 
         SQLiteDatabase db = getReadableDatabase();
@@ -69,7 +87,10 @@ public class Database extends SQLiteAssetHelper {
         db.execSQL(query);
     }
 
-    //Favorites
+    /**
+     * Método para añadir a favoritos
+     * @param foodId ID de la comida
+     */
     public void addToFavorites(String foodId)
     {
         SQLiteDatabase db = getReadableDatabase();
@@ -77,6 +98,10 @@ public class Database extends SQLiteAssetHelper {
         db.execSQL(query);
     }
 
+    /**
+     * Método para borrar de favoritos
+     * @param foodId ID de la comida
+     */
     public void removefromFavorites(String foodId)
     {
         SQLiteDatabase db = getReadableDatabase();
@@ -84,6 +109,11 @@ public class Database extends SQLiteAssetHelper {
         db.execSQL(query);
     }
 
+    /**
+     * Método para comprobar si una comida es favorita
+     * @param foodId ID de la comida
+     * @return devolvemos true o false según si es favorita o no
+     */
     public boolean isFavorite(String foodId)
     {
         SQLiteDatabase db = getReadableDatabase();
@@ -99,6 +129,10 @@ public class Database extends SQLiteAssetHelper {
         return true;
     }
 
+    /**
+     * Método para contar cuantos items tenemos en el carrito
+     * @return devolvemos total items del carrito
+     */
     public int getCountCart() {
 
         int count = 0;

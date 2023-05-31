@@ -8,20 +8,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oriol.menugo.R;
 
+/**
+ * @author Oriol
+ */
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    //Definición variables
     public TextView food_name;
     public ImageView food_image, fav_image, quick_cart;
     private ItemClickListener itemClickListener;
+
 
     public interface ItemClickListener {
         void onClick(View view, int position, boolean isLongClick);
     }
 
+    /**
+     * Añadimos un recogedor de eventos
+     * @param itemClickListener recogemos el item donde se hizo click
+     */
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
+    /**
+     * ViewHolder de la comida
+     * @param itemView recogemos la vista del item
+     */
     public FoodViewHolder(View itemView) {
         super(itemView);
 
@@ -33,6 +46,10 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         itemView.setOnClickListener(this);
     }
 
+    /**
+     * Método onClick para recuperar la vista pulsada.
+     * @param view La vista que fue pulsada.
+     */
     @Override
     public void onClick(View view) {
         itemClickListener.onClick(view, getAdapterPosition(),false);

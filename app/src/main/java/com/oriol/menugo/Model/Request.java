@@ -2,6 +2,10 @@ package com.oriol.menugo.Model;
 
 import java.util.List;
 
+/**
+ * Clase para guardar el objeto Pedido
+ * @author Oriol
+ */
 public class Request {
     private String phone;
     private String name;
@@ -13,9 +17,24 @@ public class Request {
     private String paymentMethod;
     private List<Order> foods; //List of food order
 
+    /**
+     * Constructor vació del Pedido
+     */
     public Request() {
     }
 
+    /**
+     * Constructor paramétrico del Pedido
+     * @param phone teléfono del usuario
+     * @param name nombre del usuario
+     * @param address dirección del usuario
+     * @param total precio total del pedido
+     * @param status estado del pedido
+     * @param comment comentario del pedido
+     * @param paymentState estado de pago del pedido
+     * @param paymentMethod método de pago del pedido
+     * @param foods comidas
+     */
     public Request(String phone, String name, String address, String total, String status, String comment, String paymentState, String paymentMethod, List<Order> foods) {
         this.phone = phone;
         this.name = name;

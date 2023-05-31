@@ -1,5 +1,9 @@
 package com.oriol.menugo.Model;
 
+/**
+ * Clase para guardar el objeto Usuario
+ * @author Oriol
+ */
 public class User {
     private String Name;
     private String Password;
@@ -10,10 +14,19 @@ public class User {
 
     private String secureCode;
 
+    /**
+     * Constructor vacío de Usuario
+     */
     public User() {
 
     }
 
+    /**
+     * Constructor paramétrico de Usuario
+     * @param name nombre usuario
+     * @param password contraseña usuario
+     * @param secureCode código seguridad usuario
+     */
     public User(String name, String password, String secureCode) {
         Name = name;
         Password = password;

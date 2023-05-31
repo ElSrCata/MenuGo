@@ -27,8 +27,12 @@ import com.rey.material.widget.CheckBox;
 
 import io.paperdb.Paper;
 
+/**
+ * @author Oriol
+ */
 public class SignIn extends AppCompatActivity {
 
+    //Definición variables
     EditText edtPhone, edtPassword;
     Button btnSignIn;
 
@@ -38,6 +42,13 @@ public class SignIn extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference user_table;
 
+    /**
+     * Método onCreate de la actividad SignIn
+     * @param savedInstanceState Si la actividad se reinicializa después de
+     *      * previamente cerrado, entonces este paquete contiene los datos que más
+     *      * suministrado recientemente en {@link #onSaveInstanceState}.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +145,9 @@ public class SignIn extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para mostrar el diálogo del del olvidar contraseña
+     */
     private void showForgotPwd() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

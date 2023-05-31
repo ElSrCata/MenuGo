@@ -14,8 +14,12 @@ import com.oriol.menugo.Model.Order;
 import com.oriol.menugo.Model.Request;
 import com.oriol.menugo.ViewHolder.OrderViewHolder;
 
+/**
+ * @author Oriol
+ */
 public class OrderStatus extends AppCompatActivity {
 
+    //Definición variables
     public RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
 
@@ -24,6 +28,13 @@ public class OrderStatus extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference requests;
 
+    /**
+     * Método onCreate de la actividad del estado del pedido
+     * @param savedInstanceState Si la actividad se reinicializa después de
+     *      * previamente cerrado, entonces este paquete contiene los datos que más
+     *      * suministrado recientemente en {@link #onSaveInstanceState}.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,10 @@ public class OrderStatus extends AppCompatActivity {
         loadOrders(Common.current_User.getPhone());
     }
 
+    /**
+     * Método para cargar los pedidos
+     * @param phone teléfono del usuario
+     */
     private void loadOrders(String phone) {
         adapter = new FirebaseRecyclerAdapter<Request, OrderViewHolder>(
                 Request.class,
@@ -59,6 +74,11 @@ public class OrderStatus extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Método para cambiar el texto de estado del pedido
+     * @param status estado del pedido
+     * @return
+     */
     private int convertCodeToStatus(String status) {
         if (status.equals("0"))
             return R.string.status0;

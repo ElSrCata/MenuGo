@@ -46,9 +46,13 @@ import java.util.List;
 import java.util.Locale;
 
 import info.hoang8f.widget.FButton;
-
+/**
+ * Classe Carrito
+ * @author Oriol
+ */
 public class Cart extends AppCompatActivity {
 
+    //Definición variables
     private static final int PAYPAL_REQUEST_CODE = 999;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -70,7 +74,13 @@ public class Cart extends AppCompatActivity {
 
     String address, comment;
 
-
+    /**
+     * OnCreate de la classe
+     * @param savedInstanceState Si la actividad se reinicializa después de
+     *      * previamente cerrado, entonces este paquete contiene los datos que más
+     *      * suministrado recientemente en {@link #onSaveInstanceState}.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -108,6 +118,9 @@ public class Cart extends AppCompatActivity {
         loadListFood();
     }
 
+    /**
+     * Mensaje de Alerta modo Diálogo
+     */
     private void showAlertDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this);
         alertDialog.setTitle(R.string.dialogTitle);
@@ -198,6 +211,19 @@ public class Cart extends AppCompatActivity {
         alertDialog.show();
     }
 
+    /**
+     * Resultado de la actividad
+     * @param requestCode El código de solicitud entero proporcionado originalmente a
+     *      * startActivityForResult(), que le permite identificar quién es este
+     *      * resultado de donde vino.
+     *
+     * @param resultCode El código de resultado entero devuelto por la actividad secundaria
+     *      * a través de su setResult().
+     *
+     * @param data Una intención, que puede devolver datos de resultados a la persona que llama
+     *      * (se pueden adjuntar varios datos al Intent "extras").
+     *
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -241,6 +267,9 @@ public class Cart extends AppCompatActivity {
 
     }
 
+    /**
+     * Cargar lista de comida
+     */
     private void loadListFood(){
         cart = new Database(this).getCarts();
         adapter = new CartAdapter(cart, this);
@@ -261,6 +290,11 @@ public class Cart extends AppCompatActivity {
         txtTotalPrice.setText(fmt.format(total));
     }
 
+    /**
+     * Item Seleccionadp
+     * @param item El contexto del menú del item seleccionado.
+     * @return
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if(item.getTitle().equals(Common.DELETE))
@@ -270,6 +304,10 @@ public class Cart extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Método para borrar el carrito.
+     * @param position Posición del carrito
+     */
     private void deleteCart(int position) {
 
         cart.remove(position);

@@ -1,5 +1,9 @@
 package com.oriol.menugo.Model;
 
+/**
+ * Clase para guardar el objeto Orden
+ * @author Oriol
+ */
 public class Order {
     private String ProductId;
     private String ProductName;
@@ -8,10 +12,22 @@ public class Order {
     private String Discount;
     private String Image;
 
+    /**
+     * Constructor vacío de Oden
+     */
     public Order(){
 
     }
 
+    /**
+     * Constructor paramétrico de Oden
+     * @param productId ID del producto
+     * @param productName nombre del producto
+     * @param quantity cantidad del producto
+     * @param price precio del orden
+     * @param discount descuento del orden
+     * @param image imagen del orden
+     */
     public Order(String productId, String productName, String quantity, String price, String discount, String image) {
         ProductId = productId;
         ProductName = productName;

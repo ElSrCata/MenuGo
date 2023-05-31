@@ -21,12 +21,22 @@ import com.oriol.menugo.Model.User;
 
 import io.paperdb.Paper;
 
+/**
+ * @author Oriol
+ */
 public class MainActivity extends AppCompatActivity {
 
+    //Definición variables
     Button btnSignIn,btnSignUp;
     TextView txtSlogan;
 
-
+    /**
+     * Método onCreate de la actividad principal
+     * @param savedInstanceState Si la actividad se reinicializa después de
+     *      * previamente cerrado, entonces este paquete contiene los datos que más
+     *      * suministrado recientemente en {@link #onSaveInstanceState}.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método para logearse a la aplicación
+     * @param phone teléfono usuario
+     * @param pwd contraseña usuario
+     */
     private void login(String phone, String pwd) {
 
         //Iniciamos Firebase

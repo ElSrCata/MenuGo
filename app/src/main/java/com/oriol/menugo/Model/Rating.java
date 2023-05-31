@@ -1,12 +1,25 @@
 package com.oriol.menugo.Model;
 
+/**
+ * Clase para guardar el objeto Valoraciones
+ * @author Oriol
+ */
 public class Rating {
     private String userPhone, foodId, rateValue, comment;
 
+    /**
+     * Constructor vacío de Valoraciones
+     */
     public Rating(){
-
     }
 
+    /**
+     * Constructor paramétrico de Valoraciones
+     * @param userPhone número de teléfono del usuario
+     * @param foodId ID de la comida
+     * @param rateValue valor de la valoración
+     * @param comment comentario del usuario
+     */
     public Rating(String userPhone, String foodId, String rateValue, String comment) {
         this.userPhone = userPhone;
         this.foodId = foodId;

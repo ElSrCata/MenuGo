@@ -1,17 +1,31 @@
 package com.oriol.menugo.Model;
 
+/**
+ * Clase para la Slider
+ * @author oriol
+ */
 public class Banner {
     private String id, name, image;
 
+    /**
+     * Constructor vacío
+     */
     public Banner(){
 
     }
 
+    /**
+     * Constructor para la Slider
+     * @param id id de la imagen del slide
+     * @param name nombre de la imagen
+     * @param image ruta de la imagen
+     */
     public Banner(String id, String name, String image) {
         this.id = id;
         this.name = name;
         this.image = image;
     }
+
 
     public String getId() {
         return id;

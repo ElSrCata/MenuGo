@@ -1,11 +1,28 @@
 package com.oriol.menugo.Model;
 
+/**
+ * Clase para guardar el objeto Comida
+ * @author Oriol
+ */
 public class Food {
+    //Definición variables
     private String Name, Image, Description, Price, Discount, MenuId;
 
+    /**
+     * Constructor vacío de Food
+     */
     public Food() {
     }
 
+    /**
+     * Constructor para objeto Food
+     * @param name nombre comida
+     * @param image imagen comida
+     * @param description descripción comida
+     * @param price precio comida
+     * @param discount descuento comida
+     * @param menuId ID del menú al que pertenece la comida
+     */
     public Food(String name, String image, String description, String price, String discount, String menuId) {
         Name = name;
         Image = image;

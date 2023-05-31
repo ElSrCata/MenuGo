@@ -32,8 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * @author Oriol
+ */
 public class FootList extends AppCompatActivity {
 
+    //Definición variables
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
@@ -50,6 +54,13 @@ public class FootList extends AppCompatActivity {
     //Favorites
     Database localDB;
 
+    /**
+     * Método onCreate de la actividad Lista de Comida.
+     * @param savedInstanceState Si la actividad se reinicializa después de
+     *      * previamente cerrado, entonces este paquete contiene los datos que más
+     *      * suministrado recientemente en {@link #onSaveInstanceState}
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +148,10 @@ public class FootList extends AppCompatActivity {
 
     }
 
+    /**
+     * Método para controlar el inicio de la busca
+     * @param text texto introducido en el buscador
+     */
     private void startSearch(CharSequence text) {
 
         searchAdapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(
@@ -163,6 +178,9 @@ public class FootList extends AppCompatActivity {
         recyclerView.setAdapter(searchAdapter);
     }
 
+    /**
+     * Método para cargar las sugerencias que te da el buscador
+     */
     private void loadSuggest() {
         foodList.orderByChild("menuId").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -182,6 +200,10 @@ public class FootList extends AppCompatActivity {
 
     }
 
+    /**
+     * Método para cargar la lista de comida
+     * @param categoryId ID de la categoría
+     */
     //Lista de comida
     private void loadListFood(String categoryId) {
         adapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(Food.class,

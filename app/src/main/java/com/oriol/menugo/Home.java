@@ -50,11 +50,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dmax.dialog.SpotsDialog;
 
+/**
+ * @author Oriol
+ */
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    //Definición variables
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
 
@@ -71,7 +77,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     CounterFab fab;
 
-
+    /**
+     * Método onCreate de la actividad Home
+     * @param savedInstanceState Si la actividad se reinicializa después de
+     *      * previamente cerrado, entonces este paquete contiene los datos que más
+     *      * suministrado recientemente en {@link #onSaveInstanceState}.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +140,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         setupSlider();
     }
 
+    /**
+     * Método para configurar la slider de la página principal
+     */
     private void setupSlider() {
         sliderLayout = (SliderLayout) findViewById(R.id.slider);
         image_list = new HashMap<>();
@@ -184,6 +199,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         sliderLayout.setDuration(4000);
     }
 
+    /**
+     * Método para cargar las distintas categorías
+     */
     public void loadMenu() {
 
         adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
@@ -208,18 +226,30 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         recycler_menu.setAdapter(adapter);
     }
 
+    /**
+     * Método para controlar cuando para la slider al finalizar las imagenes.
+     */
     @Override
     protected void onStop() {
         super.onStop();
         sliderLayout.stopAutoCycle();
     }
 
+    /**
+     * Método para mostrar cuantos productos hay en el carrito
+     */
     @Override
     protected void onResume() {
         super.onResume();
         fab.setCount(new Database(this).getCountCart());
     }
 
+    /**
+     * Método para inflar/crear el menú lateral
+     * @param menu Opciones del menú donde ubicar nuestros items.
+     *
+     * @return devuelve true en caso de crear el menú correctamente.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -227,6 +257,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         return true;
     }
 
+    /**
+     * Método para poder navegar por la página de home
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
@@ -234,13 +268,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
+    /**
+     * Método para controlar cual de las opciones del menú eliges.
+     * @param item item seleccionado
+     * @return devuelve true en caso de que se inicien las activdades correctamente.
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -273,6 +305,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         return true;
     }
 
+    /**
+     * Método para mostrar el diálogo para cambiar la contraseña
+     */
     private void showChangePasswordDialog() {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Home.this);
@@ -297,26 +332,34 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 {
                     if (edtNewPassword.getText().toString().equals(edtRepeatPassword.getText().toString()))
                     {
-                        Map<String, Object> passwordUpdate = new HashMap<>();
 
-                        passwordUpdate.put("password", edtNewPassword.getText().toString());
+                        if (isStrongPassword(edtNewPassword.getText().toString()) == false)
+                        {
 
-                        DatabaseReference user = FirebaseDatabase
-                                .getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/")
-                                .getReference("User");
+                        }
+                        else
+                        {
+                            Map<String, Object> passwordUpdate = new HashMap<>();
 
-                        user.child(Common.current_User.getPhone()).updateChildren(passwordUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                waitingDialog.dismiss();
-                                Toast.makeText(Home.this, "Contraseña actualizada", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Home.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                            passwordUpdate.put("password", edtNewPassword.getText().toString());
+
+                            DatabaseReference user = FirebaseDatabase
+                                    .getInstance("https://menugo-9451c-default-rtdb.europe-west1.firebasedatabase.app/")
+                                    .getReference("User");
+
+                            user.child(Common.current_User.getPhone()).updateChildren(passwordUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    waitingDialog.dismiss();
+                                    Toast.makeText(Home.this, "Contraseña actualizada", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Home.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                     else
                     {
@@ -338,7 +381,43 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         });
 
         alertDialog.show();
+    }
 
+    public boolean isStrongPassword(String password)
+    {
+        // Minimum length of 8 characters
+        if (password.length() < 8) {
+            Toast.makeText(this, "La contraseña debe tener mínimo 8 carácteres", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        // At least one uppercase letter
+        if (!password.matches(".*[A-Z].*")) {
+            Toast.makeText(this, "La contraseña debe incluir mínimo una mayúscula", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // At least one lowercase letter
+        if (!password.matches(".*[a-z].*")) {
+            Toast.makeText(this, "La contraseña debe incluir mínimo una minúscula", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // At least one digit
+        if (!password.matches(".*\\d.*")) {
+            Toast.makeText(this, "La contraseña debe incluir mínimo un número", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // At least one special character
+        Pattern specialCharPattern = Pattern.compile("[!@#$%^&*()_+=|<>?{}\\[\\]~-]");
+        Matcher specialCharMatcher = specialCharPattern.matcher(password);
+        if (!specialCharMatcher.find()) {
+            Toast.makeText(this, "La contraseña debe incluir mínimo un carácter especial", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Passed all the checks, password is strong
+        return true;
     }
 }

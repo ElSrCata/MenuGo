@@ -32,8 +32,12 @@ import com.stepstone.apprating.listener.RatingDialogListener;
 
 import java.util.Arrays;
 
+/**
+ * @author Oriol
+ */
 public class FoodDetails extends AppCompatActivity implements RatingDialogListener {
 
+    //Definición varaibles
     TextView food_name, food_price, food_description;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -48,6 +52,13 @@ public class FoodDetails extends AppCompatActivity implements RatingDialogListen
 
     Food currentFood;
 
+    /**
+     * onCreate de la actividad Detalles de la Comida
+     * @param savedInstanceState Si la actividad se reinicializa después de
+     *      * previamente cerrado, entonces este paquete contiene los datos que más
+     *      * suministrado recientemente en {@link #onSaveInstanceState}.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +132,10 @@ public class FoodDetails extends AppCompatActivity implements RatingDialogListen
         }
     }
 
+    /**
+     * Recogemos la valoración de la comida
+     * @param foodId ID de la comida
+     */
     private void getRatingFood(String foodId) {
 
         com.google.firebase.database.Query foodRating = ratingTable.orderByChild("foodId").equalTo(foodId);
@@ -150,6 +165,9 @@ public class FoodDetails extends AppCompatActivity implements RatingDialogListen
         });
     }
 
+    /**
+     * Mostramos el diálogo de calificación
+     */
     private void showRatingDialog() {
         new AppRatingDialog.Builder().setPositiveButtonText(R.string.submit)
                 .setNegativeButtonText(R.string.cancel).setNoteDescriptions(Arrays.asList("Muy mal",
@@ -161,6 +179,10 @@ public class FoodDetails extends AppCompatActivity implements RatingDialogListen
                 .setWindowAnimation(R.style.RatingDialogFadeAnim).create(FoodDetails.this).show();
     }
 
+    /**
+     * Recuperamos los detalles de la comida
+     * @param foodId ID de la comida
+     */
     private void getDetailFood(String foodId) {
         foods.child(foodId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -191,6 +213,11 @@ public class FoodDetails extends AppCompatActivity implements RatingDialogListen
 
     }
 
+    /**
+     * Método para controlar el click a confirmar
+     * @param i posición cursor
+     * @param comments comentario añadido en la valoración
+     */
     @Override
     public void onPositiveButtonClicked(int i, @NonNull String comments) {
         Rating rating = new Rating(Common.current_User.getPhone(), foodId, String.valueOf(i), comments);
