@@ -2,7 +2,7 @@
     <string name="app_name">MenuGo</string>
     <string name="slogan">La comida que te gusta, aquí la encontrarás, y en cada plato nuestra pasión culminará</string>
     <string name="signUp">Registratse</string>
-    <string name="signIn">Login</string>
+    <string name="signIn" translatable="false">Login</string>
     <string name="carro">Carro</string>
     <string name="pedido">Pedidos</string>
     <string name="status0">Pedida</string>
@@ -48,14 +48,14 @@
     <string name="denegateOrder">NO</string>
     <string name="orderSubmitted">Pedido realizado!</string>
     <string name="title_activity_home">MenuGo</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
-    <string name="menu_home">MenuGo</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home" translatable="false">MenuGo</string>
+    <string name="menu_gallery" translatable="false">Gallery</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
 </resources>
